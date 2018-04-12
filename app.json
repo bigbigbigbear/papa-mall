@@ -1,44 +1,44 @@
 {
-    "pages": [
-        "pages/index/index",
-        "pages/sourceList/sourceList",
-        "pages/sourceDetail/sourceDetail",
-        "pages/login/login",
-        "pages/signup/signup",
-        "pages/cooperation/cooperation",
-        "pages/logs/logs",
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#f56839",
-        "navigationBarTitleText": "啪啪运动资源商城",
-        "navigationBarTextStyle": "white",
-        "enablePullDownRefresh": true
-    },
-    "tabBar": {
-        "color": "#333",
-        "selectedColor": "#f56839",
-        "backgroundColor": "#fff",
-        "borderStyle": "white",
-        "list": [
-            {
-                "pagePath": "pages/index/index",
-                "text": "首页",
-                "iconPath": "images/icon-home.png",
-                "selectedIconPath": "images/icon-home-active.png"
-            },
-            {
-                "pagePath": "pages/cooperation/cooperation",
-                "text": "合作",
-                "iconPath": "images/icon-cooperation.png",
-                "selectedIconPath": "images/icon-cooperation-active.png"
-            }
-        ]
-    },
-    "networkTimeout": {
-        "request": 7000,
-        "uploadFile": 7000,
-        "downloadFile": 7000
-    },
-    "debug": true
+	"pages": [
+		"pages/signup/signup",
+		"pages/index/index",
+		"pages/sourceList/sourceList",
+		"pages/sourceDetail/sourceDetail",
+		"pages/login/login",
+		"pages/cooperation/cooperation",
+		"pages/logs/logs"
+	],
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#f56839",
+		"navigationBarTitleText": "啪啪运动资源商城",
+		"navigationBarTextStyle": "white",
+		"enablePullDownRefresh": true
+	},
+	"tabBar": {
+		"color": "#333",
+		"selectedColor": "#f56839",
+		"backgroundColor": "#fff",
+		"borderStyle": "black",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text":"首页",
+				"iconPath": "assets/images/icon-home.png",
+				"selectedIconPath": "assets/images/icon-home-active.png"
+			},
+			{
+				"pagePath": "pages/cooperation/cooperation",
+				"text":"合作",
+				"iconPath": "assets/images/icon-cooperation.png",
+				"selectedIconPath": "assets/images/icon-cooperation-active.png"
+			}
+		]
+	},
+	"networkTimeout": {
+		"request": 7000,
+		"uploadFile": 7000,
+		"downloadFile": 7000
+	},
+	"debug": true
 }
