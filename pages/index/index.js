@@ -1,7 +1,8 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+let utils = require("../../utils/util.js")
+let api = require("../../utils/api.js")
 Page({
 	//页面的初始数据
 	data: {
@@ -95,6 +96,13 @@ Page({
 	},
 	//监听页面加载
 	onLoad: function () {
+		let that = this
+		//获取分类
+		utils.request(api.typeList, {type_status: 1,page: 1, size: 200}, function (res) {
+			that.setData({
+				cateList: res.list
+			})
+		})
 	},
 	//监听页面初次渲染完成
 	onReady: function () {
