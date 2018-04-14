@@ -89,8 +89,8 @@ function requestLoad(url, params, message, success) {
 		url: config.server.host + url,
 		data: params,
 		header: {
-			//'content-type': 'application/json',
-			'content-type': 'application/x-www-form-urlencoded',
+			//'content-type': 'application/json',      //对数据进行 JSON 序列化
+			'content-type': 'application/x-www-form-urlencoded',         //会将数据转换成 query string
 			'token': 'daxiong'
 		},
 		method: 'POST',
