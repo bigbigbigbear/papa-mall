@@ -1,13 +1,48 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+    <view class='section'>
+		<view class='section-l'>
+			<image src='../../assets/images/icon-logo.png' class='img'></image>
+		</view>
+		<view class='section-r'>
+			<view class='font-orange'>
+				<text>啪啪运动</text>
+			</view>
+			<view class='section-r__tag font-10'>
+				<text>SaaS平台</text>
+				<text>供应链服务</text>
+				<text>智能硬件</text>
+			</view>
+		</view>
+	</view>
+	<view class='section-info'>
+		<view class='section-hd'>
+			<image src='../../assets/images/icon-intro.png'></image>
+			<text>啪啪运动介绍</text>
+		</view>
+		<view class='section-bd'>
+			<view>
+				<text>深圳市啪啪运动科技有限公司是一家专业的体育互联网平台服务商，通过给场馆赋能全方位解决场馆痛点，打造专属于客户的智慧场馆。</text>
+			</view>
+			<view class='space'></view>
+			<view>
+				<text>我们的目标是为一个2000平米的场馆，年综合收益增加12万元！</text>
+			</view>
+		</view>
+	</view>
+	<view class='section-info'>
+		<view class='section-hd'>
+			<image src='../../assets/images/icon-tel-min.png'></image>
+			<text>联系啪啪运动</text>
+		</view>
+		<view class='section-bd'>
+			<view>
+				<text>联系电话：13751111056（董先生）</text>
+			</view>
+			<view class='space'></view>
+			<view>
+				<text>地址：深圳市南山区科技中二路19号劲嘉大厦1008</text>
+			</view>
+		</view>
+	</view>
 </view>

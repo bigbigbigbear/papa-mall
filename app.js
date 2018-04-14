@@ -2,7 +2,6 @@
 App({
 	//监听小程序初始化
 	onLaunch: function (options) {
-		console.log(options)
 		// 展示本地存储能力
 		var logs = wx.getStorageSync('logs') || []
 		logs.unshift(Date.now())

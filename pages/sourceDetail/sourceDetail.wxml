@@ -1,2 +1,48 @@
 <!--pages/sourceList.wxml-->
-<text>pages/sourceList.wxml</text>
+<view class="container">
+	<view class='section'>
+		<view class='section-img'>
+			<image src='../../assets/images/yiyun-1.png'></image>
+		</view>
+		<view class='section-bd'>
+			<view>
+				<text>脉动香草味550ml*24  脉动起来嗨起来！</text>
+			</view>
+			<view class='font-orange font-20'>
+				<text>￥66.0</text>
+			</view>
+		</view>
+	</view>
+	<view class='section-info'>
+		<view class='section-hd'>
+			<text>资源信息</text>
+		</view>
+		<view class='section-bd'>
+			<view>
+				<text>规格：550ml*24</text>
+			</view>
+			<view class='space'></view>
+			<view>
+				<text>服务：送货上门</text>
+			</view>
+		</view>
+	</view>
+	<view class='section-info'>
+		<view class='section-hd'>
+			<text>资源政策</text>
+		</view>
+		<view class='section-bd'>
+			<view>
+				<text>买三送一</text>
+			</view>
+		</view>
+	</view>
+	<view class='section section-foot'>
+		<view class='section-l'>
+			<text>{{sourceInfo.area_name}}   {{sourceInfo.area_phone}}</text>
+		</view>
+		<view class='section-r'>
+			<image src='../../assets/images/icon-tel.png'></image>
+		</view>
+	</view>
+</view>
