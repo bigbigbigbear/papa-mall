@@ -1,41 +1,64 @@
 //app.js
+let utils = require("./utils/util.js")
+let api = require("./utils/api.js")
 App({
-	//监听小程序初始化
+	//当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
 	onLaunch: function (options) {
-		// 展示本地存储能力
-		var logs = wx.getStorageSync('logs') || []
-		logs.unshift(Date.now())
-		wx.setStorageSync('logs', logs)
-
-		// 登录
-		wx.login({
-			success: res => {
-				// 发送 res.code 到后台换取 openId, sessionKey, unionId
-			}
-		})
-		// 获取用户信息
-		wx.getSetting({
-			success: res => {
-				if (res.authSetting['scope.userInfo']) {
-					// 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-					wx.getUserInfo({
-						success: res => {
-							// 可以将 res 发送给后台解码出 unionId
-							this.globalData.userInfo = res.userInfo
-
-							// 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-							// 所以此处加入 callback 以防止这种情况
-							if (this.userInfoReadyCallback) {
-								this.userInfoReadyCallback(res)
-							}
+		let that = this,
+			// scenes是场景值它的类型是整形  
+			scenes = options.scene, aid
+		if (options.query.aid) {
+			// aid是参数,建议兼容ios和android的时候强转换为整形  
+			aid = Number(options.query.aid)
+			that.globalData.aid = aid
+		}
+	},
+	getAuthKey: function (cb) {
+		let that = this
+		utils.request({
+			url: api.getToken,
+			method: 'GET'
+		}, function (res) {
+			that.globalData.token = res
+			wx.setStorageSync('token', res)
+			// 调用登录接口
+			wx.login({
+				success: function (res1) {
+					if (res1.code) {
+						let params = {
+							code: res1.code
 						}
-					})
+						utils.request({
+							url: api.getOpenid,
+							method: 'POST',
+							data: params
+						}, function (res2) {
+							if (res2 != 0 && res2 != '' && res2 != null) {
+								//获取区域信息
+								that.getAreaInfo()
+
+								//回调
+								if(typeof cb === 'function'){
+									cb()
+								}
+							} else {
+								wx.showToast({
+									title: '获取openid失败！',
+									icon: 'none',
+									duration: 1000
+								})
+							}
+						})
+					}else{
+						console.log('获取用户登录态失败！' + res1.errMsg);
+						reject('error');
+					}
 				}
-			}
+			})
 		})
 	},
-	//监听小程序显示
-	onShow: function(options){
+	//当小程序启动，或从后台进入前台显示，会触发 onShow
+	onShow: function (options) {
 
 	},
 	//监听小程序隐藏
@@ -44,15 +67,32 @@ App({
 	},
 	//当小程序发生脚本错误，或者 api 调用失败时，会触发 onError 并带上错误信息
 	onHide: function (msg) {
-		console.log(msg)
+		//console.log(msg)
 	},
 	//当小程序出现要打开的页面不存在的情况，会带上页面信息回调该函数
 	onPageNotFound: function (res) {
-		wx.redirectTo({
+		wx.switchTab({
 			url: 'pages/index/index'
 		})
 	},
+	//获取区域信息
+	getAreaInfo: function () {
+		let that = this
+		let params = {
+			id: that.globalData.aid
+		}
+		utils.request({ url: api.areaInfo, data: params }, function (res) {
+			that.globalData.areaInfo = res
+
+			wx.setNavigationBarTitle({
+				title: res.area_name
+			})
+		})
+	},
 	globalData: {
-		userInfo: null
+		userInfo: null,
+		token: null,
+		aid: 7,
+		areaInfo: {}
 	}
 })

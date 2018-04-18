@@ -1,9 +1,12 @@
 //接口列表
 const api = {
+	getToken: '/token',                             //获取token
+	getOpenid: '/wxApplets/user/wxsesstion',         //微信授权获取openid，登录           
 	/**
 	 * 用户登录、注册
 	 */
 	userInfo: '/wxApplets/user/info',                   //用户信息，参数id
+	getSmsCode: '/wxApplets/user/msm',                   //获取短信，参数user_phone
 	signup: '/wxApplets/user/register',                     //用户注册，参数supply_area，user_info，user_name, user_password,  user_phone
 	login: '/wxApplets/user/login',                     //用户登录，参数user_password,  user_phone
 

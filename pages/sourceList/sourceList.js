@@ -2,134 +2,139 @@
 
 //获取应用实例
 const app = getApp()
-
+let utils = require("../../utils/util.js")
+let api = require("../../utils/api.js")
 Page({
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
-		showtab: 0,  //顶部选项卡索引  
+		showtab: 0,  //顶部选项卡索引
+		typeId: '',
 		tabnav: {
 			tabnum: 4,
-			tabitem: [
-				{
-					"type_id": 1,
-					"type_name": "饮料"
-				},
-				{
-					"type_id": 2,
-					"type_name": "硬件"
-				},
-				{
-					"type_id": 3,
-					"type_name": "系统"
-				},
-				{
-					"type_id": 4,
-					"type_name": "会员营销"
-				},
-				{
-					"type_id": 5,
-					"type_name": "其他"
-				},
-				{
-					"type_id": 6,
-					"type_name": "其他"
-				}
-			]
+			tabitem: []
 		},
-		brandsList: [
-			{
-				"brands_id": 1,
-				"brands_name": "脉动"
-			},
-			{
-				"brands_id": 2,
-				"brands_name": "魔力"
-			},
-			{
-				"brands_id": 3,
-				"brands_name": "佳得乐"
-			},
-			{
-				"brands_id": 4,
-				"brands_name": "宝矿力"
-			},
-			{
-				"brands_id": 5,
-				"brands_name": "怡宝"
-			},
-			{
-				"brands_id": 6,
-				"brands_name": "健力宝"
-			},
-			{
-				"brands_id": 7,
-				"brands_name": "娃哈哈"
-			},
-			{
-				"brands_id": 8,
-				"brands_name": "尖叫"
-			}
-		],
-		supplyList: [
-			{
-				supply_id: 1,
-				supply_name: '脉动橘子味550ml',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			},
-			{
-				supply_id: 2,
-				supply_name: 'Apple手表',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			},
-			{
-				supply_id: 3,
-				supply_name: '橙汁贩卖机',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			},
-			{
-				supply_id: 4,
-				supply_name: '场馆管理系统',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			},
-			{
-				supply_id: 5,
-				supply_name: '场馆小助手',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			},
-			{
-				supply_id: 6,
-				supply_name: '会员二次开发',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			}
-		]
+		brandsIndex: '',
+		brandsId: '',
+		brandsList: [],
+		supplyList: [],
+		reachBottomText: '上拉加载更多...',
+		supplyPage: 1,
+		supplySize: 6,
+		supplyTotal: 6
+	},
+	//获取分类
+	getCateList: function () {
+		let that = this
+		let params = {
+			type_status: 1, 
+			page: 1, 
+			size: 200
+		}
+		utils.request({url: api.typeList, data: params }, function (res) {
+			that.setData({
+				tabnav: {
+					tabnum: 4,
+					tabitem: res.list
+				}
+			})
+
+			that.getBrandsList()
+		})
 	},
 	// 分类选择
 	typeSeclect: function (e) {
-		let eData = e.currentTarget.dataset;
-		this.setData({
-			showtab: eData.index
+		let that = this
+		let eData = e.currentTarget.dataset
+
+		setTimeout(function(){
+			that.setData({
+				showtab: eData.index,
+				typeId: eData.id,
+				supplyList: [],
+				reachBottomText: '',
+				supplyPage: 1,
+				supplyTotal: 6
+			})
+			that.getBrandsList()
+		},0)
+	},
+	//获取品牌
+	getBrandsList: function () {
+		let that = this
+		let params = {
+			supply_type: that.data.typeId,
+			brands_status: 1, 
+			page: 1, 
+			size: 200
+		}
+		utils.request({url: api.brandsList, data: params}, function (res) {
+			that.setData({
+				brandsId: '',
+				brandsList: res.list
+			})
+
+			that.getSupplyList()
 		})
 	},
 	// 品牌选择
 	brandsSelect: function (e) {
-		let eData = e.currentTarget.dataset;
-		
+		let that = this
+		let eData = e.currentTarget.dataset
+		that.setData({
+			brandsId: eData.id,
+			brandsIndex: eData.index
+		})
+
+		setTimeout(function () {
+			that.setData({
+				brandsId: eData.id,
+				supplyList: [],
+				reachBottomText: '',
+				supplyPage: 1,
+				supplyTotal: 6
+			})
+			that.getSupplyList()
+		}, 0)
 	},
-	goCateDetail: function (e) {
+	//获取资源列表
+	getSupplyList: function () {
+		let that = this
+		if (that.data.supplyTotal / that.data.supplySize < that.data.supplyPage - 1) {
+			that.setData({
+				reachBottomText: '- 讨厌，到底啦 -'
+			})
+			return false
+		}
+		let params = {
+			area_id: 7,
+			supply_status: 1,
+			page: that.data.supplyPage,
+			size: that.data.supplySize
+		}
+		if (that.data.typeId != ''){
+			params.type_id = that.data.typeId
+		}
+		if (that.data.brandsId != '') {
+			params.brands_id = that.data.brandsId
+		}
+		utils.request({url: api.supplyList, data: params}, function (res) {
+			if (res.total == 0){
+				that.setData({
+					reachBottomText: '- 空空如也 -'
+				})
+				return false
+			}
+			that.setData({
+				supplyList: that.data.supplyList.concat(res.list),
+				supplyPage: that.data.supplyPage + 1,
+				supplyTotal: res.total,
+				reachBottomText: '上拉加载更多...'
+			})
+		})
+	},
+	goSourceDetail: function (e) {
 		let id = e.currentTarget.dataset.id
 		wx.navigateTo({
 			url: '/pages/sourceDetail/sourceDetail?id=' + id
@@ -139,7 +144,10 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-
+		this.setData({
+			typeId: options.id
+		})
+		this.getCateList()
 	},
 
 	/**
@@ -181,7 +189,7 @@ Page({
 	 * 页面上拉触底事件的处理函数
 	 */
 	onReachBottom: function () {
-
+		this.getSupplyList()
 	},
 
 	/**

@@ -7,23 +7,23 @@
             </swiper-item>
         </block>
     </swiper>
-    <view class="items items-cate">
-        <view class='item' wx:for="{{cateList}}" wx:key="{{index}}" bindtap='goCateList' data-id='{{item.type_id}}'>
+    <scroll-view class="scroll-view_H items-cate" scroll-x>
+		<view class='item' wx:for="{{cateList}}" wx:key="{{index}}" bindtap='goCateList' data-id='{{item.id}}'>
             <view>
-                <image class='img item-img' src="{{item.type_icon}}"></image>
+                <image class='img item-img' src="../../assets/images/icon-cate-{{item.id}}.png"></image>
             </view>
             <view>
                 <text class='item-title'>{{item.type_name}}</text>
             </view>
         </view>
-    </view>
+    </scroll-view>
     <!--资源推荐  -->
     <view class='source-wrap'>
         <view class='section-title'>
             <text>- 资源推荐 -</text>
         </view>
         <view class='items-source'>
-            <view class='item-source' wx:for="{{supplyList}}" wx:key="{{index}}" bindtap='goCateDetail' data-id='{{item.supply_id}}'>
+            <view class='item-source' wx:for="{{supplyList}}" wx:key="{{index}}" bindtap='goSourceDetail' data-id='{{item.id}}'>
                 <view>
                     <image class='img source-img' src="{{item.supply_img_url}}"></image>
                 </view>
@@ -38,6 +38,9 @@
                     <text>{{item.supply_name}}</text>
                 </view>
             </view>
+        </view>
+		<view class='section-title'>
+            <text>{{reachBottomText}}</text>
         </view>
     </view>
 </view>

@@ -1,4 +1,6 @@
 /* pages/sourceList.wxss */
+/* 在使用的Wxss中引入WxParse.css,可以在app.wxss */
+@import "../../wxParse/wxParse.wxss";
 /*图片  */
 .section-img{
 	background-color: #fff;
@@ -36,6 +38,13 @@
 }
 .section-bd{
 	color: #666;
+}
+.text-bg{
+	padding: 4rpx 8rpx;
+	background-color: #f56839;
+	border-radius: 8rpx;
+	color: #fff;
+	font-size: 24rpx;
 }
 /*底部  */
 .section-foot{

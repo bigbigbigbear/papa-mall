@@ -1,74 +1,15 @@
 // 引入相关的文件
 const config = require('./config')
-const DEFAULT_REQUEST_OPTIONS = {
-	host: config.server.host,
-	url: '',
-	data: {},
-	header: {
-		"Content-Type": "application/json"
-	},
-	method: 'POST'
-}
 
-/**
- * @function 微信请求方法封装，并发请求
- * @param {*} method 请求类型
- * @param {*} host 域名地址
- * @param {*} url 接口地址
- * @param {*} data 参数数据
- */
-function wxRequest(opt) {
-	let options = Object.assign({}, DEFAULT_REQUEST_OPTIONS, opt)
-	let { host, url, data, header, method } = options
+//获取应用实例
+const app = getApp()
+let api = require("./api.js")
 
-	if (typeof url === 'string' && url) {
-		// 单接口请求，返回一个数据
-		return new Promise((resolve, reject) => {
-			let requestTask = wx.request({
-				method: method,
-				url: host + url,
-				data: data,
-				header: header,
-				success: function (res) {
-					resolve(res.data)
-				},
-				fail: function (err) {
-					reject(err)
-				},
-				complete: function () {
-					//console.log('请求完毕');
-				}
-			})
-		});
-	} else if (url instanceof Array) {
-		// 如果url为数组，则属于多接口请求
-		return Promise.all(
-			url.map((val, index, arr) => {
-				return requestFn({
-					method,
-					host,
-					url: val,
-					data: data[index]
-				})
-			}));
-	} else {
-		throw new Error('url不能为空');
-	}
-}
-// 使用方法
-// utils.wxRequest({
-// 	url: ['/users/list', '/users/list']
-// })
-// 	.then((res) => {
-// 		console.log(res);
-// 	}).catch(err => {
-// 		console.log(err);
-// 	});
 /**
  * 不带loading的请求
  */
-function request(url, params, success) {
-	this.requestLoad(url, params, "", success)
+function request(opt, success) {
+	this.requestLoad(opt, "", success)
 }
 
 /**
@@ -79,52 +20,73 @@ function request(url, params, success) {
  * @params success:成功的回调函数
  * @params fail：失败的回调
  */
-function requestLoad(url, params, message, success) {
+function requestLoad(opt, message, success) {
+	let that = this
+	let options = {}
+	let token = wx.getStorageSync('token')
+	options.method = opt.method || 'POST'
+	if (options.method == 'POST' && token){
+		options.header = {
+			'token': token,
+			'content-type': 'application/x-www-form-urlencoded'
+		}
+	}
+	options.url = opt.url
+	options.host = config.server.host
+	options.data = opt.data
 	if (message != "") {
 		wx.showLoading({
 			title: message
 		})
 	}
-	wx.request({
-		url: config.server.host + url,
-		data: params,
-		header: {
-			//'content-type': 'application/json',      //对数据进行 JSON 序列化
-			'content-type': 'application/x-www-form-urlencoded',         //会将数据转换成 query string
-			'token': 'daxiong'
-		},
-		method: 'POST',
-		success: function (res) {
-			if (message != "") {
-				wx.hideLoading()
-			}
-			if (res.statusCode == 200) {
-				success(res.data)
-			} else if (res.statusCode == 500) {
+	if (options.url != undefined){
+		wx.request({
+			url: options.host + options.url,
+			data: options.data,
+			header: options.header,
+			method: options.method,
+			success: function (res) {
+				if (message != "") {
+					wx.hideLoading()
+				}
+				if (res.statusCode == 200) {
+					success(res.data)
+				} else if (res.statusCode == 500) {
+					wx.showToast({
+						title: '服务器异常，请重试！',
+						duration: 2000
+					})
+				} else if (res.statusCode == 401) {
+					//token失效，重新获取
+					// that.wxRequest({
+					// 	url: api.getToken,
+					// 	method: 'GET'
+					// }).then((res) => {
+					// 	app.globalData.token = res
+					// }).catch(err => {
+					// 	console.log(err)
+					// })
+				} else {
+					wx.showToast({
+						title: res,
+						duration: 2000
+					})
+				}
+			},
+			fail: function (res) {
+				if (message != "") {
+					wx.hideLoading()
+				}
 				wx.showToast({
-					title: '服务器异常，请重试！',
+					title: '请求失败，请重试！',
 					duration: 2000
 				})
-			} else {
-				wx.showToast({
-					title: res,
-					duration: 2000
-				})
+			},
+			complete: function (res) {
+				//请求完成
 			}
-		},
-		fail: function (res) {
-			if (message != "") {
-				wx.hideLoading()
-			}
-			wx.showToast({
-				title: '请求失败，请重试！',
-				duration: 2000
-			})
-		},
-		complete: function (res) {
-			//请求完成
-		}
-	})
+		})
+	}
 }
 //使用
 // utils.requestLoad('users/list', data, '正在加载...', function (res) {
@@ -153,7 +115,6 @@ const formatNumber = n => {
 }
 
 module.exports = {
-	wxRequest: wxRequest,
 	request: request,
 	requestLoad: requestLoad,
 	formatTime: formatTime

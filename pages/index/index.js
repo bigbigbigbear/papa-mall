@@ -14,72 +14,12 @@ Page({
 			'../../assets/images/slider-1.jpg',
 			'../../assets/images/slider-2.jpg'
 		],
-		cateList: [
-			{
-				type_id: 1,
-				type_name: '饮料',
-				type_icon: '../../assets/images/icon-cate-1.png'
-			},
-			{
-				type_id: 2,
-				type_name: '硬件',
-				type_icon: '../../assets/images/icon-cate-2.png'
-			},
-			{
-				type_id: 3,
-				type_name: '系统',
-				type_icon: '../../assets/images/icon-cate-3.png'
-			},
-			{
-				type_id: 4,
-				type_name: '会员营销',
-				type_icon: '../../assets/images/icon-cate-4.png'
-			}
-		],
-		supplyList: [
-			{
-				supply_id: 1,
-				supply_name: '脉动橘子味550ml',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			},
-			{
-				supply_id: 2,
-				supply_name: 'Apple手表',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			},
-			{
-				supply_id: 3,
-				supply_name: '橙汁贩卖机',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			},
-			{
-				supply_id: 4,
-				supply_name: '场馆管理系统',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			},
-			{
-				supply_id: 5,
-				supply_name: '场馆小助手',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			},
-			{
-				supply_id: 6,
-				supply_name: '会员二次开发',
-				supply_price: '9.90',
-				supply_banner: '买三送一',
-				supply_img_url: '../../assets/images/maidong.png'
-			}
-		]
+		cateList: [],
+		supplyList: [],
+		reachBottomText: '上拉加载更多...',
+		supplyPage: 1,
+		supplySize: 6,
+		supplyTotal: 6
 	},
 	//跳往分类列表
 	goCateList: function(e){
@@ -88,20 +28,54 @@ Page({
 			url: '/pages/sourceList/sourceList?id=' + id
 		})
 	},
-	goCateDetail: function(e){
+	goSourceDetail: function(e){
 		let id = e.currentTarget.dataset.id
 		wx.navigateTo({
 			url: '/pages/sourceDetail/sourceDetail?id=' + id
 		})
 	},
-	//监听页面加载
-	onLoad: function () {
+	//获取分类
+	getCateList: function(){
 		let that = this
-		//获取分类
-		utils.request(api.typeList, {type_status: 1,page: 1, size: 200}, function (res) {
+		let params = {
+			type_status: 1, 
+			page: 1, 
+			size: 200
+		}
+		utils.request({url: api.typeList, data: params}, function (res) {
 			that.setData({
 				cateList: res.list
 			})
+		})
+	},
+	//获取资源推荐
+	getSupplyList: function () {
+		let that = this
+		if (that.data.supplyTotal / that.data.supplySize < that.data.supplyPage - 1) {
+			that.setData({
+				reachBottomText: '- 讨厌，到底啦 -'
+			})
+			return false
+		}
+		let params = {
+			area_id: 7, 
+			page: that.data.supplyPage,
+			size: that.data.supplySize
+		}
+		utils.request({url: api.supplyList, data: params}, function (res) {
+			that.setData({
+				supplyList: that.data.supplyList.concat(res.list),
+				supplyPage: that.data.supplyPage + 1,
+				supplyTotal: res.total
+			})
+		})
+	},
+	//监听页面加载
+	onLoad: function () {
+		let that = this
+		app.getAuthKey(function(){
+			that.getCateList()
+			that.getSupplyList()
 		})
 	},
 	//监听页面初次渲染完成
@@ -126,7 +100,7 @@ Page({
 	},
 	//页面上拉触底事件的处理函数
 	onReachBottom: function () {
-
+		this.getSupplyList()
 	},
 	//用户点击右上角转发
 	onShareAppMessage: function () {

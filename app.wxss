@@ -24,6 +24,9 @@ page {
 .font-orange{
 	color: #f56839;
 }
+.font-blue{
+	color: #00ccff;
+}
 .font-20{
 	font-size: 40rpx;
 }

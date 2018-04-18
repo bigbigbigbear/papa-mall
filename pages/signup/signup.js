@@ -1,6 +1,8 @@
 //index.js
 //获取应用实例
 const app = getApp()
+let utils = require("../../utils/util.js")
+let api = require("../../utils/api.js")
 let getCode = false         //防止重复点击获取验证码
 Page({
 	data: {
@@ -34,48 +36,92 @@ Page({
 	},
 	//立即注册
 	userSignup: function (event){
-		//导航
-		wx.redirectTo({
-			url: "/pages/index/index",
-			success: function () {
-				//接口调用成功
-			},
-			fail: function () {
-				//接口调用失败
-			},
-			complete: function () {
-				//接口调用完成
-			}
+		let phone = this.data.userPhone,
+			code = this.data.smsCode,
+			name = this.data.userName,
+			pwd = this.data.userPassword,
+			aid = app.globalData.aid
+		if(phone == ''){
+			wx.showToast({
+				title: '手机号不能为空',
+				icon: 'none'
+			})
+			return false
+		}
+		if (!(/^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/.test(phone))) {
+			wx.showToast({
+				title: '手机号错误！',
+				icon: 'none'
+			})
+			return false
+		}
+		if (code == '') {
+			wx.showToast({
+				title: '验证码不能为空',
+				icon: 'none'
+			})
+			return false
+		}
+		if (name == '') {
+			wx.showToast({
+				title: '姓名不能为空',
+				icon: 'none'
+			})
+			return false
+		}
+		if (pwd == '') {
+			wx.showToast({
+				title: '密码不能为空',
+				icon: 'none'
+			})
+			return false
+		}
+		let params = {
+			user_phone: phone,
+			msm_core: code,
+			user_name: name,
+			user_password: pwd,
+			supply_area: aid
+		}
+		//请求验证码
+		utils.request({
+			url: api.signup,
+			data: params
+		}, function (res) {
+			wx.showToast({
+				title: '注册成功',
+				success: function(res){
+					//导航
+					wx.switchTab({
+						url: "/pages/index/index"
+					})
+				}
+			})
 		})
-		// let params = {
-		// 	user_phone: this.userPhone,
-		// 	sms_code: this.smsCode,
-		// 	user_name: this.userName,
-		// 	user_password: this.userPassword
-		// }
-		// wx.request({
-		// 	url: '', //接口地址
-		// 	data: params,
-		// 	header: {
-		// 		'content-type': 'application/json' // 默认值
-		// 	},
-		// 	success: function (res) {
-		// 		console.log(res)
-		// 	}
-		// })
 	},
 	//获取验证码
 	getSmsCode: function(){
+		let that = this
 		if (!getCode){
 			getCode = true
 
+			let phone = this.data.userPhone
+			if (!(/^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/.test(phone))){
+				wx.showToast({
+					title: '手机号错误！',
+					icon: 'none'
+				})
+				getCode = false
+				return false
+			}
 			//请求验证码
-			wx.request({
-				url: '', //接口地址
-				data: {},
-				success: function (res) {
-					console.log(res)
+			utils.request({
+				url: api.getSmsCode,
+				data: {
+					user_phone: phone
 				}
+			}, function (res) {
+				
 			})
 
 			//倒计时实现

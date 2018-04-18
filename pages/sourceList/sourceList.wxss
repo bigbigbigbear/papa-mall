@@ -93,3 +93,9 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+.section-title{
+	height: 80rpx;
+	line-height: 80rpx;
+	text-align: center;
+	color: #999;
+}

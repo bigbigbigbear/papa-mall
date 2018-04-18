@@ -26,13 +26,13 @@
         </view>
 		<view class="section section-form">
 			<image class='img form-input__bg' src="../../assets/images/icon-user.png"></image>
-            <input id="user_password" class="form-input" type="text" name="user_password" placeholder="密码" bindinput="inputPassword"/>
+            <input id="user_password" class="form-input" type="text" name="user_password" placeholder="密码" bindinput="inputPassword" password/>
         </view>
         <view class="section section-form">
             <button hover-class="none" class='form-btn' bindtap="userSignup">立即注册</button>
         </view>
     </form>
-	<view class='section section-bottom' bindtap='goLogin'>
+	<!-- <view class='section section-bottom' bindtap='goLogin'>
 		<text>已有账号？去登录</text>
-	</view>
+	</view> -->
 </view>

@@ -21,33 +21,48 @@ Page({
 	},
 	//登录
 	userLogin: function (event){
-		//导航
-		wx.switchTab({
-			url: "/pages/index/index",
-			success: function (res) {
-				//接口调用成功
-				//console.log(res)
-			},
-			fail: function (res) {
-				//接口调用失败
-				//console.log(res)
-			},
-			complete: function (res) {
-				//接口调用完成
-				//console.log(res)
-			}
+		let phone = this.data.userPhone,
+			pwd = this.data.userPassword
+		if (phone == '') {
+			wx.showToast({
+				title: '手机号不能为空',
+				icon: 'none'
+			})
+			return false
+		}
+		if (!(/^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/.test(phone))) {
+			wx.showToast({
+				title: '手机号错误！',
+				icon: 'none'
+			})
+			return false
+		}
+		if (pwd == '') {
+			wx.showToast({
+				title: '密码不能为空',
+				icon: 'none'
+			})
+			return false
+		}
+		let params = {
+			user_phone: phone,
+			user_password: pwd
+		}
+		//请求验证码
+		utils.request({
+			url: api.login,
+			data: params
+		}, function (res) {
+			wx.showToast({
+				title: '登录成功',
+				success: function (res) {
+					//导航
+					wx.switchTab({
+						url: "/pages/index/index"
+					})
+				}
+			})
 		})
-		// let params = {
-		// 	user_phone: this.userPhone,
-		// 	user_password: this.userPassword
-		// }
-		// wx.request({
-		// 	url: '', //接口地址
-		// 	data: params,
-		// 	success: function (res) {
-		// 		console.log(res)
-		// 	}
-		// })
 	},
 	//去注册页面
 	goSignup: function(){

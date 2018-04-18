@@ -4,10 +4,8 @@
 		"pages/login/login",
 		"pages/sourceDetail/sourceDetail",
 		"pages/sourceList/sourceList",
-		
 		"pages/cooperation/cooperation",
-		"pages/signup/signup",
-		"pages/logs/logs"
+		"pages/signup/signup"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
