@@ -58,7 +58,7 @@ Page({
 			return false
 		}
 		let params = {
-			area_id: 7, 
+			area_id: app.globalData.aid, 
 			page: that.data.supplyPage,
 			size: that.data.supplySize
 		}
