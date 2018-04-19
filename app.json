@@ -1,11 +1,10 @@
 {
 	"pages": [
-		"pages/cooperation/cooperation",
 		"pages/index/index",
+		"pages/cooperation/cooperation",
 		"pages/login/login",
 		"pages/sourceDetail/sourceDetail",
 		"pages/sourceList/sourceList",
-		"pages/cooperation/cooperation",
 		"pages/signup/signup"
 	],
 	"window": {

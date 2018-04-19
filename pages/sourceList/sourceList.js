@@ -195,7 +195,42 @@ Page({
 	/**
 	 * 用户点击右上角分享
 	 */
-	onShareAppMessage: function () {
-
+	onShareAppMessage: function (res) {
+		let that = this
+		let aid = app.globalData.aid
+		// 当用户将小程序转发到任一群聊之后，可以获取到此次转发的 shareTicket，此转发卡片在群聊中被其他用户打开时，可以在 App.onLaunch() 或 App.onShow 获取到另一个 shareTicket
+		wx.showShareMenu({
+			withShareTicket: true
+		})
+		//右上角转发from:'menu'
+		if (res.from === 'button') {
+			// 来自页面内转发按钮
+			//console.log(res.target)
+		}
+		return {
+			title: '资源列表',
+			path: '/pages/cooperation/cooperation?id=' + that.data.typeId + '&aid=' + aid,
+			success: function (res) {
+				// 转发成功
+				//console.log(res)
+				//获取转发信息
+				wx.getShareInfo({
+					shareTicket: res.shareTickets[0],
+					success: function (_res) {
+						// encryptedData: ""      包括敏感数据在内的完整转发信息的加密数据
+						// errMsg: "getShareInfo:ok"        信息
+						// iv: ""          加密算法的初始向量
+						console.log(_res)
+					},
+					fail: function (_res) {
+						console.log(_res)
+					}
+				})
+			},
+			fail: function (res) {
+				// 转发失败
+				console.log(res)
+			}
+		}
 	}
 })

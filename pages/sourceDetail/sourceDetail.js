@@ -103,7 +103,6 @@ Page({
 	onReachBottom: function () {
 
 	},
-
 	onShareAppMessage: function (res) {
 		let that = this
 		let aid = app.globalData.aid

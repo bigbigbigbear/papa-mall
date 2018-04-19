@@ -46,6 +46,7 @@ function requestLoad(opt, message, success) {
 			header: options.header,
 			method: options.method,
 			success: function (res) {
+				//console.log(res)
 				if (message != "") {
 					wx.hideLoading()
 				}
@@ -58,14 +59,12 @@ function requestLoad(opt, message, success) {
 					})
 				} else if (res.statusCode == 401) {
 					//token失效，重新获取
-					// that.wxRequest({
-					// 	url: api.getToken,
-					// 	method: 'GET'
-					// }).then((res) => {
-					// 	app.globalData.token = res
-					// }).catch(err => {
-					// 	console.log(err)
-					// })
+					that.request({
+						url: api.getToken,
+						method: 'GET'
+					}, function (res) {
+						wx.setStorageSync('token', res)
+					})
 				} else {
 					wx.showToast({
 						title: res,
