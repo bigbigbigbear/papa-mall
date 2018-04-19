@@ -6,3 +6,5 @@
 * sourceList
 * sourceDetail（富文本工具wxParse）
 * coperation
+
+### 使用的组件库：  [MinUI](https://meili.github.io/min/docs/install/index.html)

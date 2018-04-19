@@ -1,5 +1,6 @@
 {
 	"pages": [
+		"pages/cooperation/cooperation",
 		"pages/index/index",
 		"pages/login/login",
 		"pages/sourceDetail/sourceDetail",
