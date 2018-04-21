@@ -65,6 +65,9 @@ Page({
 		utils.request({url: api.supplyList, data: params}, function (res) {
 			if (res.total == 0) {
 				that.setData({
+					supplyList: [],
+					supplyPage: 1,
+					supplyTotal: 6,
 					reachBottomText: '空空如也'
 				})
 				return false
@@ -78,14 +81,6 @@ Page({
 	},
 	//监听页面加载
 	onLoad: function () {
-		
-	},
-	//监听页面初次渲染完成
-	onReady: function () {
-
-	},
-	//监听页面显示
-	onShow: function () {
 		let that = this
 		app.getAuthKey(function () {
 			that.setData({
@@ -93,10 +88,21 @@ Page({
 				supplyPage: 1,
 				supplyTotal: 6
 			})
-			setTimeout(function(){
+			setTimeout(function () {
 				that.getCateList()
 				that.getSupplyList()
 			}, 0)
+		})
+	},
+	//监听页面初次渲染完成
+	onReady: function () {
+
+	},
+	//监听页面显示
+	onShow: function () {
+		this.getSupplyList()
+		wx.setNavigationBarTitle({
+			title: app.globalData.areaInfo.area_name
 		})
 	},
 	//监听页面隐藏

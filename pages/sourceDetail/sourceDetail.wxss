@@ -3,6 +3,9 @@
 @import "../../wxParse/wxParse.wxss";
 /*图片  */
 .section-img{
+	width: 50%;
+	padding: 0 25%;
+	text-align: center;
 	background-color: #fff;
 }
 .section-img image{

@@ -11,8 +11,8 @@ Page({
 		codeInfo: '获取验证码',
 		userPhone: '',
 		smsCode: '',
-		userName: '',
-		userPassword: ''
+		userName: ''
+		//userPassword: ''
 	},
 	inputPhone: function(e){
 		this.setData({
@@ -29,17 +29,17 @@ Page({
 			userName: e.detail.value
 		})
 	},
-	inputPassword: function (e) {
-		this.setData({
-			userPassword: e.detail.value
-		})
-	},
+	// inputPassword: function (e) {
+	// 	this.setData({
+	// 		userPassword: e.detail.value
+	// 	})
+	// },
 	//立即注册
 	userSignup: function (event){
 		let phone = this.data.userPhone,
 			code = this.data.smsCode,
 			name = this.data.userName,
-			pwd = this.data.userPassword,
+			//pwd = this.data.userPassword,
 			aid = app.globalData.aid
 		if(phone == ''){
 			wx.showToast({
@@ -69,18 +69,18 @@ Page({
 			})
 			return false
 		}
-		if (pwd == '') {
-			wx.showToast({
-				title: '密码不能为空',
-				icon: 'none'
-			})
-			return false
-		}
+		// if (pwd == '') {
+		// 	wx.showToast({
+		// 		title: '密码不能为空',
+		// 		icon: 'none'
+		// 	})
+		// 	return false
+		// }
 		let params = {
 			user_phone: phone,
 			msm_core: code,
 			user_name: name,
-			user_password: pwd,
+			//user_password: pwd,
 			supply_area: aid
 		}
 		//请求验证码
@@ -90,6 +90,7 @@ Page({
 		}, function (res) {
 			wx.showToast({
 				title: '注册成功',
+				duration: 2000,
 				success: function(res){
 					//导航
 					wx.switchTab({

@@ -74,6 +74,7 @@
 	height: 480rpx;
 	background-color: #fff;
 	padding: 20rpx;
+	overflow: hidden;
 	border: 10rpx solid #eee;
 }
 .source-img{

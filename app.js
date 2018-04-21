@@ -5,10 +5,10 @@ App({
 	//当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
 	onLaunch: function (options) {
 		let that = this,
-			// scenes是场景值它的类型是整形  
+			// scenes是场景值它的类型是整形
 			scenes = options.scene, aid
 		if (options.query.aid) {
-			// aid是参数,建议兼容ios和android的时候强转换为整形  
+			// aid是参数,建议兼容ios和android的时候强转换为整形
 			aid = Number(options.query.aid)
 			that.globalData.aid = aid
 		}
@@ -92,7 +92,7 @@ App({
 	globalData: {
 		userInfo: null,
 		token: null,
-		aid: 7,
+		aid: 1,
 		areaInfo: {}
 	}
 })

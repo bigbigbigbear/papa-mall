@@ -50,6 +50,7 @@
 	height: 360rppx;
 	background-color: #fff;
 	padding: 20rpx;
+	overflow: hidden;
 	border: 10rpx solid #eee;
 }
 .source-img{
