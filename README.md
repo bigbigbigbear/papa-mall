@@ -17,3 +17,5 @@
 4. 数据变化更新view层需要使用setData来触发，有些地方会频繁触发，影响性能
 5. post传递参数要想正确的让后台获取到，header需要设置为'application/x-www-form-urlencoded'（将数据转换成 query string）
 6. 不支持富文本解析，原因在于就那几个标签，富文本的标签会不识别，需要用wxParse来解析，vue直接用v-html就可以
+7. showToast文本不能超过7个字
+8. 路由不支持别名，写起来麻烦

@@ -1,72 +1,78 @@
 /**index.wxss**/
-/*分类区域  */
+/*header信息  */
 .container{
 	background-color: #eee;
 }
+swiper{
+	height: 350rpx;
+}
 .slide-image{
 	width: 100%;
-	height: 325rpx;
+	height: 350rpx;
 }
-.items-cate{
-	width: 100%;
-	height: 220rpx;
-	white-space: nowrap;
-	box-sizing: border-box;
-	background-color: #fff;
-	font-size: 24rpx;
+/*列表  */
+.popup__content {
+    width: 100%;
+    max-height: 600rpx;
+    background: #fff;
+	overflow-y: scroll;
 }
 .item{
-	width: 25%;
-	display: inline-block;
-	text-align: center;
-	padding-top: 50rpx; 
-}
-.item-img{
-	width: 80rpx;
-	height: 80rpx;
-	margin-bottom: 20rpx;
-}
-/*资源推荐  */
-.source-wrap{
 	width: 100%;
+	height: 100rpx;
+	line-height: 100rpx;
 	box-sizing: border-box;
-	padding: 0 10rpx;
+	background: #fff;
+	text-indent: 20rpx;
+	border-bottom: 1rpx solid #ddd;
 }
-.section-title{
-	height: 80rpx;
-	line-height: 80rpx;
-	text-align: center;
-	color: #999;
+/*介绍  */
+.section-info{
+	width: 100%;
+	margin-top: 20rpx;
+	background-color: #fff;
 }
-.items-source{
+.section-hd,.section-bd{
+	width: 100%;
+	padding: 20rpx;
+	box-sizing: border-box;
+}
+.section-hd{
+	position: relative;
+	text-indent: 16rpx;
+	border-bottom: 1rpx solid #eee;
+}
+.section-hd__title::before{
+	content: '';
+	width: 6rpx;
+	height: 30rpx;
+	background-color: #f56839;
+	position: absolute;
+	left: 20rpx;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.co-item{
 	width: 100%;
 	display: flex;
-	flex-flow: row wrap;
-	align-content: flex-start;
-}
-.item-source{
 	box-sizing: border-box;
-	flex: 0 0 50%;
-	height: 360rppx;
-	background-color: #fff;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10rpx 0;
+	border-bottom: 1rpx solid #eee;
+}
+.co-item__l{
+	width: 25%;
+	height: 160rpx;
+	box-sizing: border-box;
 	padding: 20rpx;
+	margin-right: 20rpx;
 	overflow: hidden;
-	border: 10rpx solid #eee;
 }
-.source-img{
+.co-item__l image{
 	width: 100%;
-	height: 300rpx;
 }
-.source-banner{
-	padding: 4rpx 8rpx;
-	background-color: #f56839;
-	border-radius: 8rpx;
-	color: #fff;
-	font-size: 24rpx;
-}
-.source-name{
-	margin-top: 12rpx;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+.co-item__r{
+	flex: 1;
 }

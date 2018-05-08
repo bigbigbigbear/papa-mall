@@ -5,7 +5,7 @@
 			<image class='img img-logo' mode="{{mode}}" src="{{src}}"></image>
 		</view>
 		<view class="section__title">
-			<text>啪啪运动资源商城</text>
+			<text>啪啪运动体育场馆资源服务</text>
 		</view>
 	</view>
     <form class="page-form">
@@ -24,10 +24,14 @@
 			<image class='img form-input__bg' src="../../assets/images/icon-user.png"></image>
             <input id="user_name" class="form-input" type="text" name="user_name" placeholder="姓名" bindinput="inputName"/>
         </view>
-		<!-- <view class="section section-form">
-			<image class='img form-input__bg' src="../../assets/images/icon-user.png"></image>
-            <input id="user_password" class="form-input" type="text" name="user_password" placeholder="密码" bindinput="inputPassword" password/>
-        </view> -->
+		<view class="section section-form">
+			<image class='img form-input__bg' src="../../assets/images/icon-stadia-area.png"></image>
+            <input id="stadia_name" class="form-input" type="text" name="stadia_name" placeholder="场馆名称" bindinput="inputStadiaName"/>
+        </view>
+		<view class="section section-form">
+			<image class='img form-input__bg' src="../../assets/images/icon-stadia-name.png"></image>
+            <input id="stadia_area" class="form-input" type="text" name="stadia_area" placeholder="场馆规模" bindinput="inputStadiaArea"/>
+        </view>
         <view class="section section-form">
             <button hover-class="none" class='form-btn' bindtap="userSignup">立即注册</button>
         </view>

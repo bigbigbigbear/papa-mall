@@ -1,16 +1,17 @@
 {
 	"pages": [
 		"pages/index/index",
-		"pages/cooperation/cooperation",
+		"pages/cooperateDetail/cooperateDetail",
+		"pages/source/source",
 		"pages/login/login",
+		"pages/signup/signup",
 		"pages/sourceDetail/sourceDetail",
-		"pages/sourceList/sourceList",
-		"pages/signup/signup"
+		"pages/sourceList/sourceList"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#f56839",
-		"navigationBarTitleText": "啪啪运动资源商城",
+		"navigationBarTitleText": "啪啪运动体育场馆资源服务平台",
 		"navigationBarTextStyle": "white",
 		"enablePullDownRefresh": false
 	},
@@ -22,15 +23,15 @@
 		"list": [
 			{
 				"pagePath": "pages/index/index",
-				"text":"首页",
-				"iconPath": "assets/images/icon-home.png",
-				"selectedIconPath": "assets/images/icon-home-active.png"
+				"text":"合作",
+				"iconPath": "assets/images/icon-hezuo.png",
+				"selectedIconPath": "assets/images/icon-hezuo-active.png"
 			},
 			{
-				"pagePath": "pages/cooperation/cooperation",
-				"text":"合作",
-				"iconPath": "assets/images/icon-cooperation.png",
-				"selectedIconPath": "assets/images/icon-cooperation-active.png"
+				"pagePath": "pages/source/source",
+				"text":"资源",
+				"iconPath": "assets/images/icon-source.png",
+				"selectedIconPath": "assets/images/icon-source-active.png"
 			}
 		]
 	},

@@ -1,0 +1,96 @@
+/* pages/sourceList.wxss */
+/* 在使用的Wxss中引入WxParse.css,可以在app.wxss */
+@import "../../wxParse/wxParse.wxss";
+.section{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 20rpx;
+	margin-bottom: 20rpx;
+	background-color: #fff;
+}
+.section-l{
+	width: 108rpx;
+	margin-right: 20rpx; 
+}
+.section-r{
+	flex: 1;
+	line-height: 50rpx;
+	position: relative;
+}
+.section-l image{
+	width: 108rpx;
+	height: 108rpx;
+}
+.section-r__tag text{
+	background-color: #f56839;
+	padding: 4rpx 8rpx;
+	margin-right: 20rpx;
+	border-radius: 8rpx;
+	color: #fff;
+}
+.items-content{
+	width: 100%;
+	height: 250rpx;
+	white-space: nowrap;
+	box-sizing: border-box;
+	background-color: #fff;
+	font-size: 24rpx;
+}
+.item{
+	width: 25%;
+	display: inline-block;
+	text-align: center;
+}
+.item .item-img{
+	width: 90%;
+	margin-bottom: 20rpx;
+}
+/*说明  */
+.section-info{
+	width: 100%;
+	margin-bottom: 20rpx;
+	background-color: #fff;
+}
+.section-hd,.section-bd{
+	width: 100%;
+	padding: 20rpx;
+	box-sizing: border-box;
+}
+.section-hd{
+	border-bottom: 1rpx solid #eee;
+}
+.section-bd{
+	color: #666;
+}
+/*底部  */
+.section-foot{
+	width: 100%;
+	height: 100rpx;
+	line-height: 100rpx;
+	display: flex;
+	flex-direction: row;
+	background-color: #fff;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
+.section-foot__l{
+	width: 70%;
+	box-sizing: border-box;
+	padding-left: 20rpx;
+}
+.section-foot__r{
+	flex: 1;
+	height: 100rpx;
+	box-sizing: border-box;
+	background-color: #f56839;
+	text-align: center;
+}
+.section-foot__r image{
+	width: 62rpx;
+	height: 62rpx;
+	vertical-align: middle;
+}

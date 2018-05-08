@@ -1,8 +1,8 @@
 {
 	"navigationBarBackgroundColor": "#ffffff",
 	"navigationBarTextStyle": "black",
-	"navigationBarTitleText": "用户注册",
-	"backgroundColor": "#fff",
+	"navigationBarTitleText": "合作详情",
+	"backgroundColor": "#eeeeee",
 	"backgroundTextStyle": "light",
 	"enablePullDownRefresh": false
 }

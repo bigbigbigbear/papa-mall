@@ -11,6 +11,12 @@ const api = {
 	login: '/wxApplets/user/login',                     //用户登录，参数user_password,  user_phone
 
 	/**
+	 * 合作方式接口
+	 */
+	cooperateInfo: '/wxApplets/cooperate/info',                   //合作方式信息，参数id
+	cooperateList: '/wxApplets/cooperate/list',                     //合作方式列表，参数cooperate_status，page，size
+
+	/**
 	 * 目录接口
 	 */
 	areaInfo: '/wxApplets/area/info',                   //目录信息，参数id

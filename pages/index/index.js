@@ -4,124 +4,88 @@ const app = getApp()
 let utils = require("../../utils/util.js")
 let api = require("../../utils/api.js")
 Page({
-	//页面的初始数据
 	data: {
 		indicatorDots: true,
 		autoplay: true,
 		interval: 3000,
 		duration: 1000,
 		imgUrls: [
-			'../../assets/images/slider-1.jpg',
-			'../../assets/images/slider-2.jpg'
+			'../../assets/images/slider-3.jpg',
+			'../../assets/images/slider-4.jpg',
+			'../../assets/images/slider-5.jpg'
 		],
-		cateList: [],
-		supplyList: [],
-		reachBottomText: '上拉加载更多...',
-		supplyPage: 1,
-		supplySize: 6,
-		supplyTotal: 6
+		showPopup: false,
+		areaList: [],
+		areaInfo: {},
+		typeList: []
 	},
-	//跳往分类列表
-	goCateList: function(e){
-		let id = e.currentTarget.dataset.id
-		wx.navigateTo({
-			url: '/pages/sourceList/sourceList?id=' + id
-		})
+	//显示目录列表
+	showAreaList: function(){
+		let popupComponent = this.selectComponent('.popup');
+		popupComponent && popupComponent.show();
 	},
-	goSourceDetail: function(e){
-		let id = e.currentTarget.dataset.id
-		wx.navigateTo({
-			url: '/pages/sourceDetail/sourceDetail?id=' + id
-		})
-	},
-	//获取分类
-	getCateList: function(){
+	//获取目录列表
+	getAreaList: function(){
 		let that = this
 		let params = {
-			type_status: 1, 
-			page: 1, 
+			area_status: 1,
+			page: 1,
 			size: 200
 		}
-		utils.request({url: api.typeList, data: params}, function (res) {
+		utils.request({ url: api.areaList, data: params }, function (res) {
 			that.setData({
-				cateList: res.list
+				areaList: res.list
 			})
 		})
 	},
-	//获取资源推荐
-	getSupplyList: function () {
+	//获取合作方式列表
+	getTypeList: function () {
 		let that = this
-		if (that.data.supplyTotal / that.data.supplySize < that.data.supplyPage - 1) {
-			that.setData({
-				reachBottomText: '- 讨厌，到底啦 -'
-			})
-			return false
-		}
 		let params = {
-			area_id: app.globalData.aid, 
-			page: that.data.supplyPage,
-			size: that.data.supplySize
+			cooperate_status: 1,
+			page: 1,
+			size: 200
 		}
-		utils.request({url: api.supplyList, data: params}, function (res) {
-			if (res.total == 0) {
-				that.setData({
-					supplyList: [],
-					supplyPage: 1,
-					supplyTotal: 6,
-					reachBottomText: '空空如也'
-				})
-				return false
-			}
+		utils.request({ url: api.cooperateList, data: params }, function (res) {
 			that.setData({
-				supplyList: that.data.supplyList.concat(res.list),
-				supplyPage: that.data.supplyPage + 1,
-				supplyTotal: res.total
+				typeList: res.list
 			})
 		})
 	},
-	//监听页面加载
+	selectArea: function(e){
+		let that = this
+		let aid = e.currentTarget.dataset.id
+		let params = {
+			id: aid
+		}
+		utils.request({ url: api.areaInfo, data: params }, function (res) {
+			app.globalData.areaInfo = res
+			app.globalData.aid = aid
+
+			that.setData({
+				areaInfo: res
+			})
+		})
+	},
+	goCooperateDetail: function(e){
+		let id = e.currentTarget.dataset.id
+		wx.navigateTo({
+			url: '/pages/cooperateDetail/cooperateDetail?id=' + id
+		})
+	},
 	onLoad: function () {
 		let that = this
 		app.getAuthKey(function () {
+			//从全局获取区域信息
 			that.setData({
-				supplyList: [],
-				supplyPage: 1,
-				supplyTotal: 6
+				areaInfo: app.globalData.areaInfo
 			})
 			setTimeout(function () {
-				that.getCateList()
-				that.getSupplyList()
+				that.getAreaList()
+				that.getTypeList()
 			}, 0)
 		})
 	},
-	//监听页面初次渲染完成
-	onReady: function () {
-
-	},
-	//监听页面显示
-	onShow: function () {
-		this.getSupplyList()
-		wx.setNavigationBarTitle({
-			title: app.globalData.areaInfo.area_name
-		})
-	},
-	//监听页面隐藏
-	onHide: function () {
-
-	},
-	//监听页面卸载
-	onUnload: function () {
-
-	},
-	//监听用户下拉
-	onPullDownRefresh: function () {
-
-	},
-	//页面上拉触底事件的处理函数
-	onReachBottom: function () {
-		this.getSupplyList()
-	},
-	//用户点击右上角转发
 	onShareAppMessage: function (res) {
 		let that = this
 		let aid = app.globalData.aid
@@ -136,7 +100,7 @@ Page({
 		}
 		return {
 			title: '啪啪运动资源商城',
-			path: '/pages/index/index?aid=' + aid,
+			path: '/pages/cooperation/cooperation?aid=' + aid,
 			success: function (res) {
 				// 转发成功
 				//console.log(res)
@@ -159,13 +123,5 @@ Page({
 				console.log(res)
 			}
 		}
-	},
-	//页面滚动触发事件的处理函数
-	onPageScroll: function () {
-
-	},
-	//当前是 tab 页时，点击 tab 时触发
-	onTabItemTap: function (item) {
-		console.log(item)
 	}
 })

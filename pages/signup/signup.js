@@ -7,12 +7,15 @@ let getCode = false         //防止重复点击获取验证码
 Page({
 	data: {
 		mode: 'aspectFit',
-		src: '../../assets/images/icon-logo.png',
+		src: '../../assets/images/logo-3.png',
 		codeInfo: '获取验证码',
 		userPhone: '',
 		smsCode: '',
-		userName: ''
-		//userPassword: ''
+		userName: '',
+		stadiaName: '',
+		stadiaArea: '',
+		cid: '',
+		sid: ''
 	},
 	inputPhone: function(e){
 		this.setData({
@@ -29,18 +32,25 @@ Page({
 			userName: e.detail.value
 		})
 	},
-	// inputPassword: function (e) {
-	// 	this.setData({
-	// 		userPassword: e.detail.value
-	// 	})
-	// },
+	inputStadiaName: function (e) {
+		this.setData({
+			stadiaName: e.detail.value
+		})
+	},
+	inputStadiaArea: function (e) {
+		this.setData({
+			stadiaArea: e.detail.value
+		})
+	},
 	//立即注册
 	userSignup: function (event){
 		let phone = this.data.userPhone,
 			code = this.data.smsCode,
 			name = this.data.userName,
-			//pwd = this.data.userPassword,
-			aid = app.globalData.aid
+			stadiaName = this.data.stadiaName,
+			stadiaArea = this.data.stadiaArea,
+			aid = app.globalData.aid,
+			that = this
 		if(phone == ''){
 			wx.showToast({
 				title: '手机号不能为空',
@@ -69,18 +79,18 @@ Page({
 			})
 			return false
 		}
-		// if (pwd == '') {
-		// 	wx.showToast({
-		// 		title: '密码不能为空',
-		// 		icon: 'none'
-		// 	})
-		// 	return false
-		// }
+		if (stadiaName == '') {
+			wx.showToast({
+				title: '场馆名不能为空',
+				icon: 'none'
+			})
+			return false
+		}
 		let params = {
 			user_phone: phone,
 			msm_core: code,
 			user_name: name,
-			//user_password: pwd,
+			user_info: stadiaName + '，' + stadiaArea,
 			supply_area: aid
 		}
 		//请求验证码
@@ -93,6 +103,18 @@ Page({
 				duration: 2000,
 				success: function(res){
 					//导航
+					if (that.data.cid != '' && that.data.cid != null){
+						wx.navigateTo({
+							url: "/pages/cooperateDetail/cooperateDetail?id=" + that.data.cid
+						})
+						return false
+					}
+					if (that.data.sid != '' && that.data.sid != null) {
+						wx.navigateTo({
+							url: '/pages/sourceDetail/sourceDetail?id=' + that.data.sid
+						})
+						return false
+					}
 					wx.switchTab({
 						url: "/pages/index/index"
 					})
@@ -163,6 +185,17 @@ Page({
 	},
 	onLoad: function (options) {
 		// 1.页面初始化 options为页面跳转所带来的参数
+		// console.log(options)
+		if(options.cid){
+			this.setData({
+				cid: options.cid
+			})
+		}
+		if (options.sid) {
+			this.setData({
+				cid: options.sid
+			})
+		}
 	},
 	onReady: function () {
 		// 页面渲染完成

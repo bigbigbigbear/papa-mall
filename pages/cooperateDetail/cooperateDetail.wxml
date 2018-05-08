@@ -1,0 +1,76 @@
+<!--pages/sourceList.wxml-->
+<!-- 引入wxParse模板 -->
+<import src="../../wxParse/wxParse.wxml"/>
+
+<view class="container">
+	<view class='section'>
+        <view class='section-l'>
+            <image src='{{cooperateInfo.cooperate_img_url}}' class='img'></image>
+        </view>
+        <view class='section-r'>
+            <view class='font-orange'>
+                <text>{{cooperateInfo.cooperate_name}}</text>
+            </view>
+            <view class='section-r__tag font-10'>
+                <text wx:for='{{tags}}' wx:key='{{index}}'>{{item}}</text>
+            </view>
+        </view>
+    </view>
+	<view class='section-info'>
+		<view class='section-hd'>
+			<text>合作介绍</text>
+		</view>
+		<view class='section-bd'>
+			<text>{{cooperateInfo.cooperate_desc}}</text>
+		</view>
+	</view>
+	<view class='section-info'>
+		<view class='section-hd'>
+			<text>合作项目</text>
+		</view>
+		<view class='section-bd'>
+			<scroll-view class="items-content" scroll-x>
+				<view class='item' wx:for="{{items}}" wx:key="{{index}}" bindtap='goSourceDetail' data-id='{{item.id}}'>
+					<view>
+						<image class='img item-img' src="{{item.supply_img_url}}" mode='widthFix'></image>
+					</view>
+					<view>
+						<text class='item-title'>{{item.supply_name}}</text>
+					</view>
+				</view>
+			</scroll-view>
+		</view>
+	</view>
+	<view class='section-info'>
+		<view class='section-hd'>
+			<text>合作案例</text>
+		</view>
+		<view class='section-bd'>
+			<!-- 这一块是富文本 显示的内容区 -->
+			<!-- 这里data中article为bindName  -->
+			<template is="wxParse" data="{{wxParseData:article1.nodes}}"/>
+		</view>
+	</view>
+	<view class='section-info'>
+		<view class='section-hd'>
+			<text>资源政策</text>
+		</view>
+		<view class='section-bd' wx:if="{{cooperateInfo.is_login}}">
+			<!-- 这一块是富文本 显示的内容区 -->
+			<!-- 这里data中article为bindName  -->
+			<template is="wxParse" data="{{wxParseData:article2.nodes}}"/>
+		</view>
+		<view class='section-bd' wx:else bindtap='goSignup'>
+			<text>具体政策请先<text class='font-blue'> 注册 </text>后再查看哦</text>
+		</view>
+	</view>
+	<view class='divider'></view>
+	<view class='section-foot'>
+		<view class='section-foot__l'>
+			<text>{{areaInfo.area_contacts}}   {{areaInfo.contacts_phone}}</text>
+		</view>
+		<view class='section-foot__r' bindtap='makePhoneCall' data-phone="{{areaInfo.contacts_phone}}">
+			<image src='../../assets/images/icon-tel.png'></image>
+		</view>
+	</view>
+</view>
